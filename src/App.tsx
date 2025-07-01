@@ -9,7 +9,11 @@ import { RegisterPage } from './pages/Register'
 import { LoginPage } from './pages/Login'
 import { OtpPage } from './pages/Otp'
 import { TestPage } from './pages/Test'
-
+import { CartPage } from './pages/Cart'
+import { ProductDetailPage } from './pages/ProductDetail'
+import { CheckoutPage } from './pages/Checkout'
+import { PaymentPage } from './pages/Payment'
+import { Review } from './pages/Review'
 
 function App() {
   return (
@@ -20,9 +24,12 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/otp/:mode" element={<OtpPage />} />
-          <Route path="/test" element={<TestPage />} />
-        
-
+          <Route path="/test" element={<TestPage />} /> 
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/products/:id" element={<ProductDetailPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/review" element={<Review />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
