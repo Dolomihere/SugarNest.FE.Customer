@@ -13,11 +13,11 @@ export function HomePage() {
   ];
 
   return(
-  <div className="bg-white dark:bg-amber-500">
+  <div className="dark:bg-grey-900">
     
     <Nav />
     
-    <section className="bg-white dark:bg-gray-900">
+    <section className="dark:bg-gray-900">
       <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
 
         <div className="mr-auto place-self-center lg:col-span-7">
@@ -50,7 +50,7 @@ export function HomePage() {
       </LoopComponent>
     </div> */}
 
-    <section className="px-10 my-10 space-y-20">
+    <section className="px-10 my-10 space-y-20 dark:bg-gray-900">
       <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
 
         <img
@@ -107,7 +107,7 @@ export function HomePage() {
       </div>
     </section>
 
-    <div className="w-2/3 mx-auto p-4 my-8 text-center bg-white border border-gray-200 rounded-lg shadow-sm sm:p-8 dark:bg-amber-500 dark:border-gray-700">
+    <div className="w-2/3 mx-auto p-4 my-8 text-center border border-gray-200 rounded-lg shadow-sm sm:p-8 dark:bg-amber-500 dark:border-gray-700">
 
       <h5 className="mb-2 text-3xl font-bold text-amber-500 dark:text-white">Đăng Ký Nhận Khuyến Mãi</h5>
       <p className="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">Đừng bỏ lỡ những chiếc bánh mới nhất cùng các ưu đãi hấp dẫn chỉ dành riêng cho khách hàng đăng ký nhận tin.</p>

@@ -13,7 +13,7 @@ export function VerifyEmail({ email }: {email:string}) {
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
-
+    
   const handleChange = (index: number, value: string) => {
 
     if (!/^\d?$/.test(value)) return;
