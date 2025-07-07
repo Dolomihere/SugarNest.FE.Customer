@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 export function Nav() {
   const token = localStorage.getItem('accessToken');
@@ -26,7 +27,7 @@ export function Nav() {
           </button>
 
           {!token &&
-            <button type="button" className="text-white bg-amber-500 hover:bg-amber-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-amber-500 dark:focus:ring-blue-800 cursor-pointer">Đăng nhập</button>
+            <Link to="/login" className="text-white bg-amber-500 hover:bg-amber-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-amber-500 dark:focus:ring-blue-800 cursor-pointer">Đăng nhập</Link>
           }
 
           {token

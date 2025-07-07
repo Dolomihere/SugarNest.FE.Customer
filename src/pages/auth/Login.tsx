@@ -2,14 +2,14 @@ import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { useMutation } from "@tanstack/react-query"
 
-import type { Login } from "../models/FormModel"
+import type { Login } from "../../models/FormModel"
 
-import AuthService from "../services/AuthService"
+import AuthService from "../../services/AuthService"
 
 export function LoginPage() {
   const goto = useNavigate();
 
-  const [login, setLogin] = useState<Login>({ userNameOrEmail: '', password: '' });
+  const [login, setLogin] = useState<Login>({ userNameOrEmail: sessionStorage.getItem('email') ?? '', password: '' });
   const [remember, setRemember] = useState<boolean>(false);
   const [errorMgs, setErrorMgs] = useState<string>('');
 
@@ -44,13 +44,18 @@ export function LoginPage() {
     mutationFn: (formdata: Login) => {
       return AuthService.login(formdata);
     },
-    onError: (error, variables, context) => {
+    onError: () => {
       setErrorMgs('Lỗi đăng nhập thử lại lần sau');
     },
-    onSuccess: (data, variables, context) => {
-      let res = data.data;
-      localStorage.setItem('accessToken', res.data.accessToken);
-      localStorage.setItem('refreshToken', res.data.refreshToken);
+    onSuccess: (data) => {
+
+      if (remember) {
+        localStorage.setItem('accessToken', JSON.stringify(data.accessToken));
+        localStorage.setItem('refreshToken', JSON.stringify(data.refreshToken));
+      }
+      else {
+        localStorage.setItem('accessToken', JSON.stringify(data.accessToken));
+      }
       goto('/');
     }
   });
@@ -66,7 +71,7 @@ export function LoginPage() {
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
 
                 <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-                  <img className="w-8 h-8 mr-2" src="logo.png" alt="logo" />
+                  <img className="w-8 h-8 mr-2" src="/src/assets/logo.png" alt="logo" />
                   SugarNest
                 </a>
                 
@@ -163,7 +168,7 @@ export function LoginPage() {
           </div>
 
           <div className="hidden md:block w-1/2">
-            <img src="/images/sign-in.png" alt="Login" className="object-cover w-full h-full" />
+            <img src="/src/assets/images/sign-in.png" alt="Login" className="object-cover w-full h-full" />
           </div>
         </div>
 

@@ -1,19 +1,20 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import { useMutation } from "@tanstack/react-query"
 
-import type { PasswordReset } from "../../../models/OtpModel"
+import type { PasswordReset } from "../../models/OtpModel"
 
-import AuthService from "../../../services/AuthService"
+import { SendOtp } from "../../components/SendOtp"
 
-export function ResetPassword() {
-  const goto = useNavigate();
+import AuthService from "../../services/AuthService"
 
+export function ResetPassword({ mode } : { mode:string }) {
+  const [form, setForm] = useState<PasswordReset>({ otp: '', email: '', newPassword: '' });
   const [errorMgs, setErrorMgs] = useState<string>('');
-  const [form, setForm] = useState({ otp: '', email: '', newPassword: '', confirmPwd: '' });
+
+  const [change, setChange] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
 
     setForm((prev) => ({
       ...prev,
@@ -21,19 +22,29 @@ export function ResetPassword() {
     }));
   };
 
-  const mutationOtp = useMutation({
-    mutationFn: (formdata: PasswordReset) => {
-      return AuthService.resetpassword(formdata);
-    },
-    onError: (error, variables, context) => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    sessionStorage.setItem('newpassword', form.newPassword);
+    mutate.mutate();
+  };
+
+  const mutate = useMutation({
+    mutationFn: async () => await AuthService.resendresetpassword(form.email),
+    onError: () => {
       setErrorMgs('Lỗi, thử lại lần sau');
     },
-    onSuccess: (data, variables, context) => {
-      goto('/login');
+    onSuccess: () => {
+      setChange(true);
     }
   });
 
-  return(
+  if (change) {
+    return (
+      <SendOtp email={form.email} mode={mode} />
+    )
+  }
+
+  return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="min-h-dvh flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
 
@@ -54,7 +65,7 @@ export function ResetPassword() {
             </div>
           )}
 
-          <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="#">
+          <form onSubmit={handleSubmit} className="mt-4 space-y-4 lg:mt-5 md:space-y-5" id="resetpwd-form">
 
             <div>
               <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Địa chỉ email</label>
@@ -79,7 +90,7 @@ export function ResetPassword() {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#2563eb] focus:border-[#2563eb] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </div>
 
-            <div>
+            {/* <div>
               <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Xác nhận mật khẩu</label>
               <input 
                 type="password" 
@@ -89,7 +100,7 @@ export function ResetPassword() {
                 placeholder="••••••••" 
                 onChange={handleChange}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#2563eb] focus:border-[#2563eb] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-            </div>
+            </div> */}
 
             {/* <div className="flex items-start">
               <div className="flex items-center h-5">
@@ -101,7 +112,16 @@ export function ResetPassword() {
               </div>
             </div> */}
 
-            <button type="submit" className="w-full text-white bg-[#2563eb] hover:bg-[#1d4ed8] focus:ring-4 focus:outline-none focus:ring-[#93c5fd] font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-[#2563eb] dark:hover:bg-[#1d4ed8] dark:focus:ring-[#1e40af]">Đổi mật khẩu</button>
+            <button 
+              type="submit" 
+              className={`w-full text-white bg-[#2563eb] hover:bg-[#1d4ed8] focus:ring-4 focus:outline-none focus:ring-[#93c5fd] font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-[#2563eb] dark:hover:bg-[#1d4ed8] dark:focus:ring-[#1e40af]
+              ${(mutate.isPending)
+                ? 'opacity-50 cursor-not-allowed'
+                : ''
+              }`}
+            >
+              Đổi mật khẩu
+            </button>
 
           </form>
 

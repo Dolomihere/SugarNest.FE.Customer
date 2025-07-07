@@ -2,9 +2,9 @@ import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { useMutation } from "@tanstack/react-query"
 
-import type { Register } from "../models/FormModel"
+import type { Register } from "../../models/FormModel"
 
-import AuthService from "../services/AuthService"
+import AuthService from "../../services/AuthService"
 
 export function RegisterPage() {
   const goto = useNavigate();
@@ -13,7 +13,7 @@ export function RegisterPage() {
   const [errorMgs, setErrorMgs] = useState<string>('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
 
     setRegister((prev) => ({
       ...prev,
@@ -51,11 +51,11 @@ export function RegisterPage() {
     mutationFn: (formdata: Register) => {
       return AuthService.register(formdata);
     },
-    onError: (error, variables, context) => {
+    onError: () => {
       setErrorMgs('Lỗi đăng kí thử lại lần sau');
     },
-    onSuccess: (data, variables, context) => {
-      localStorage.setItem('email', register.email);
+    onSuccess: () => {
+      sessionStorage.setItem('email', register.email);
       goto('/otp/emailverify');
     }
   });
@@ -71,7 +71,7 @@ export function RegisterPage() {
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
 
                 <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-                  <img className="w-8 h-8 mr-2" src="logo.png" alt="logo" />
+                  <img className="w-8 h-8 mr-2" src="/src/assets/logo.png" alt="logo" />
                   SugarNest
                 </a>
                 
@@ -185,7 +185,7 @@ export function RegisterPage() {
           </div>
 
           <div className="hidden md:block w-1/2">
-            <img src="/images/sign-up.png" alt="Sign Up" className="object-cover w-full h-full" />
+            <img src="/src/assets/images/sign-up.png" alt="Sign Up" className="object-cover w-full h-full" />
           </div>
         </div>
 

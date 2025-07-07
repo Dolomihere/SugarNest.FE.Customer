@@ -1,17 +1,39 @@
-import httpClient from "../configs/AxiosConfig"
+import { publicApi } from "../configs/AxiosConfig";
 
 import type { Login, Register } from "../models/FormModel"
-import type { EmailVerify, PasswordReset } from "../models/OtpModel"
+import type { Enable2fa, EmailVerify, PasswordReset } from "../models/OtpModel"
 
 const endpoint = '/auth';
 
 const AuthService = {
-  register: (formdata: Register) => httpClient.post(`${endpoint}/register`, formdata),
-  login: (formdata: Login) => httpClient.post(`${endpoint}/login`, formdata),
-  refreshtoken: (token: string) => httpClient.post(`${endpoint}`, token),
-  verifyemail: (formdata: EmailVerify) => httpClient.post(`${endpoint}/verify`, formdata),
-  resendverifyemail: (email: string) => httpClient.post(`${endpoint}/resend`, email),
-  resetpassword: (formdata: PasswordReset) => httpClient.post(`${endpoint}/reset-password`, formdata),
+  register: async (formdata: Register) => {
+    const res = await publicApi.post(`${endpoint}/register`, { ...formdata });
+    return res.data.data;
+  },
+  login: async (formdata: Login) => {
+    const res = await publicApi.post(`${endpoint}/login`, { ...formdata });
+    return res.data.data;
+  },
+  enable2fa: async (formdata: Enable2fa) => {
+    const res = await publicApi.post(`${endpoint}/login2fa`, { ...formdata });
+    return res.data.data;
+  },
+  verifyemail: async (formdata: EmailVerify) => {
+    const res = await publicApi.post(`${endpoint}/verify`, { ...formdata });
+    return res.data.data;
+  },
+  resendverifyemail: async (email: string) => {
+    const res = await publicApi.post(`${endpoint}/resend`, { email });
+    return res.data.data;
+  },
+  resetpassword: async (formdata: PasswordReset) => {
+    const res = await publicApi.post(`${endpoint}/reset-password`, { ...formdata });
+    return res.data.data;
+  },
+  resendresetpassword: async (email: string) => {
+    const res = await publicApi.post(`${endpoint}/reset-password/resend`, { email, resetPasswordUrl: "/" });
+    return res.data.data;
+  }
 }
 
 export default AuthService;
