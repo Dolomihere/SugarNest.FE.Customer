@@ -10,7 +10,7 @@ import { LoginPage } from './pages/auth/Login'
 import { OtpPage } from './pages/otp/Otp'
 import { TestPage } from './pages/Test'
 import { CartPage } from './pages/Cart'
-import { ProductDetailPage } from './pages/ProductDetail'
+import { ProductDetailPage } from './pages/product/ProductDetail'
 import { CheckoutPage } from './pages/Checkout'
 import { PaymentPage } from './pages/Payment'
 import { Review } from './pages/Review'
@@ -26,7 +26,7 @@ function App() {
           <Route path="/otp/:mode" element={<OtpPage />} />
           <Route path="/test" element={<TestPage />} /> 
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/products/:id" element={<ProductDetailPage />} />
+          <Route path="/products/:productId" element={<ProductDetailPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/review" element={<Review />} />
