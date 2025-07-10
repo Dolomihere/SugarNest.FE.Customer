@@ -1,4 +1,3 @@
-
 export interface AddtoCart {
   productId: string,
   note: string | null,

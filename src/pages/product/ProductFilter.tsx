@@ -1,9 +1,10 @@
 import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 
-import type { SearchQuery, Filter  } from "../../models/ProductModel"
+import type { SearchQuery, FilterProduct } from "../../models/ProductModel"
 
 import { ProductPage } from "./Product"
+import { FilterBar } from "../../components/FilterBar"
 
 import CategoryService from "../../services/CategoryService"
 
@@ -19,6 +20,26 @@ export function ProductFilterPage() {
     pageIndex: 1,
     pageSize: 10
   });
+
+  const [filter, setFiler] = useState<FilterProduct>({
+    categoryName: '',
+    ratingPoint: 5,
+    lowToHighRating: false,
+    lowToHighCost: true,
+    priceRange: {
+      minPrice: 10000,
+      maxPrice: 100000
+    }
+  });
+
+  const [sortOrder, setSortOrder] = useState<number>();
+  const options = [
+    "Most Popular",
+    "Best Rating",
+    "Newest",
+    "Price: Low to High",
+    "Price: High to Low",
+  ];
 
   const [toggle, setToggle] = useState<boolean>(false);
 
@@ -366,7 +387,7 @@ export function ProductFilterPage() {
                     aria-expanded="false" 
                     aria-haspopup="true"
                   >
-                    Sort
+                    Sắp xếp theo
                     <svg className="-mr-1 ml-1 size-5 shrink-0 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                       <path fillRule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
                     </svg>
@@ -376,11 +397,19 @@ export function ProductFilterPage() {
                 <div className={`absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black/5 focus:outline-hidden ${!toggle && 'hidden'} `} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={1}>
                   <div className="py-1" role="none">
 
-                    <a href="#" className="block px-4 py-2 text-sm font-medium text-gray-900" role="menuitem" tabIndex={1} id="menu-item-0">Most Popular</a>
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-500" role="menuitem" tabIndex={1} id="menu-item-1">Best Rating</a>
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-500" role="menuitem" tabIndex={1} id="menu-item-2">Newest</a>
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-500" role="menuitem" tabIndex={1} id="menu-item-3">Price: Low to High</a>
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-500" role="menuitem" tabIndex={1} id="menu-item-4">Price: High to Low</a>
+                    {options.map((option, i) => (
+                      <button 
+                        key={i} 
+                        className={`block px-4 py-2 text-sm cursor-pointer 
+                        ${sortOrder === i ? "font-medium text-gray-900" : "text-gray-500"}`} 
+                        role="menuitem" 
+                        tabIndex={1} 
+                        id={`menu-item-${i}`}
+                        onClick={() => setSortOrder(i)}
+                      >
+                        {option}
+                      </button>
+                    ))}
 
                   </div>
                 </div>
@@ -534,90 +563,9 @@ export function ProductFilterPage() {
                   </div>
                 </div> */}
                 
-                <div className="border-b border-gray-200 py-6">
-                  <h3 className="-my-3 flow-root">
-
-                    <button type="button" className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500" aria-controls="filter-section-category" aria-expanded="false">
-                      <span className="font-medium text-gray-900">Loại sản phẩm</span>
-                      <span className="ml-6 flex items-center">
-
-                        <svg className="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                          <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
-                        </svg>
-
-                        <svg className="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                          <path fillRule="evenodd" d="M4 10a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H4.75A.75.75 0 0 1 4 10Z" clipRule="evenodd" />
-                        </svg>
-                      </span>
-                    </button>
-                  </h3>
-
-                  <div className="pt-6" id="filter-section-category">
-                    <div className="space-y-4">
-                      <div className="flex gap-3">
-                        <div className="flex h-5 shrink-0 items-center">
-                          <div className="group grid size-4 grid-cols-1">
-                            <input id="filter-category-0" name="category[]" value="new-arrivals" type="checkbox" className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto" />
-                            <svg className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
-                              <path className="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                              <path className="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          </div>
-                        </div>
-                        <label htmlFor="filter-category-0" className="text-sm text-gray-600">New Arrivals</label>
-                      </div>
-                      <div className="flex gap-3">
-                        <div className="flex h-5 shrink-0 items-center">
-                          <div className="group grid size-4 grid-cols-1">
-                            <input id="filter-category-1" name="category[]" value="sale" type="checkbox" className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto" />
-                            <svg className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
-                              <path className="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                              <path className="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          </div>
-                        </div>
-                        <label htmlFor="filter-category-1" className="text-sm text-gray-600">Sale</label>
-                      </div>
-                      <div className="flex gap-3">
-                        <div className="flex h-5 shrink-0 items-center">
-                          <div className="group grid size-4 grid-cols-1">
-                            <input id="filter-category-2" name="category[]" value="travel" type="checkbox" checked className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto" />
-                            <svg className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
-                              <path className="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                              <path className="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          </div>
-                        </div>
-                        <label htmlFor="filter-category-2" className="text-sm text-gray-600">Travel</label>
-                      </div>
-                      <div className="flex gap-3">
-                        <div className="flex h-5 shrink-0 items-center">
-                          <div className="group grid size-4 grid-cols-1">
-                            <input id="filter-category-3" name="category[]" value="organization" type="checkbox" className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto" />
-                            <svg className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
-                              <path className="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                              <path className="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          </div>
-                        </div>
-                        <label htmlFor="filter-category-3" className="text-sm text-gray-600">Organization</label>
-                      </div>
-                      <div className="flex gap-3">
-                        <div className="flex h-5 shrink-0 items-center">
-                          <div className="group grid size-4 grid-cols-1">
-                            <input id="filter-category-4" name="category[]" value="accessories" type="checkbox" className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto" />
-                            <svg className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
-                              <path className="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                              <path className="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          </div>
-                        </div>
-                        <label htmlFor="filter-category-4" className="text-sm text-gray-600">Accessories</label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
+                <FilterBar />
+                <FilterBar />
+                
                 {/* <div className="border-b border-gray-200 py-6">
                   <h3 className="-my-3 flow-root">
 

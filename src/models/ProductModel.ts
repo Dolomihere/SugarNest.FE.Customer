@@ -32,12 +32,21 @@ export interface SearchQuery {
   searchTerm: string,
   sortBy: string,
   sortDecending: boolean,
-  filter: Filter,
+  filter: {
+    isActive: boolean,
+    categoryId: string
+  },
   pageIndex: number,
   pageSize: number
 }
 
-export interface Filter {
-  isActive: boolean,
-  categoryId: string
+export interface FilterProduct {
+  categoryName: string,
+  ratingPoint: number,
+  lowToHighRating: boolean,
+  lowToHighCost: boolean,
+  priceRange: {
+    minPrice: number,
+    maxPrice: number
+  }
 }

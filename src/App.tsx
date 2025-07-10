@@ -31,7 +31,7 @@ function App() {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/review" element={<Review />} />
-          <Route path="/filter" element={<ProductFilterPage />} />
+          <Route path="products" element={<ProductFilterPage />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
