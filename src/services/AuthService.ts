@@ -8,31 +8,31 @@ const endpoint = '/auth';
 const AuthService = {
   register: async (formdata: Register) => {
     const res = await publicApi.post(`${endpoint}/register`, { ...formdata });
-    return res.data.data;
+    return res.data;
   },
   login: async (formdata: Login) => {
     const res = await publicApi.post(`${endpoint}/login`, { ...formdata });
-    return res.data.data;
+    return res.data;
   },
   enable2fa: async (formdata: Enable2fa) => {
     const res = await publicApi.post(`${endpoint}/login2fa`, { ...formdata });
-    return res.data.data;
+    return res.data;
   },
   verifyemail: async (formdata: EmailVerify) => {
     const res = await publicApi.post(`${endpoint}/verify`, { ...formdata });
-    return res.data.data;
+    return res.data;
   },
   resendverifyemail: async (email: string) => {
     const res = await publicApi.post(`${endpoint}/resend`, { email });
-    return res.data.data;
+    return res.data;
   },
   resetpassword: async (formdata: PasswordReset) => {
     const res = await publicApi.post(`${endpoint}/reset-password`, { ...formdata });
-    return res.data.data;
+    return res.data;
   },
   resendresetpassword: async (email: string) => {
     const res = await publicApi.post(`${endpoint}/reset-password/resend`, { email, resetPasswordUrl: "/" });
-    return res.data.data;
+    return res.data;
   }
 }
 

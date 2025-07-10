@@ -4,8 +4,10 @@ export interface Login {
 }
 
 export interface Register {
-  username: string, 
   email: string, 
+  phoneNumber: string,
+  fullName: string,
+  username: string, 
   password: string, 
   confirmPwd: string
   role: string

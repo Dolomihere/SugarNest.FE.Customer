@@ -14,6 +14,7 @@ import { ProductDetailPage } from './pages/product/ProductDetail'
 import { CheckoutPage } from './pages/Checkout'
 import { PaymentPage } from './pages/Payment'
 import { Review } from './pages/Review'
+import { ProductFilterPage } from './pages/product/ProductFilter'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/review" element={<Review />} />
+          <Route path="/filter" element={<ProductFilterPage />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

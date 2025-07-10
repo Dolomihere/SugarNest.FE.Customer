@@ -37,7 +37,7 @@ export interface SearchQuery {
   pageSize: number
 }
 
-interface Filter {
+export interface Filter {
   isActive: boolean,
   categoryId: string
 }
