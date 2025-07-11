@@ -9,7 +9,7 @@ import AuthService from "../../services/AuthService"
 export function RegisterPage() {
   const goto = useNavigate();
 
-  const [register, setRegister] = useState<Register>({ username: '', email: '', password: '', confirmPwd: '', role: 'customer' });
+  const [register, setRegister] = useState<Register>({ username: '', fullName: '', email: '', phoneNumber: '', password: '', confirmPwd: '', role: 'customer' });
   const [errorMgs, setErrorMgs] = useState<string>('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +65,7 @@ export function RegisterPage() {
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
 
         <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-4xl gap-8">
-          <div className="w-full md:w-1/2">
+          <div className="w-full md:w-2/3">
 
             <div className="w-full bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -87,18 +87,34 @@ export function RegisterPage() {
                     </div>
                   )}
 
-                  <div>
-                    <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                      Họ tên
-                    </label>
-                    <input
-                      type="username"
-                      name="username"
-                      value={register.username}
-                      onChange={handleChange}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#2563eb] focus:border-[#2563eb] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                      placeholder="Nguyễn Văn A"
-                    />
+                  <div className="flex gap-4">
+                    <div className="basis-1/3">
+                      <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Tên tài khoản
+                      </label>
+                      <input
+                        type="username"
+                        name="username"
+                        value={register.username}
+                        onChange={handleChange}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#2563eb] focus:border-[#2563eb] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                        placeholder="abc"
+                      />
+                    </div>
+
+                    <div className="basis-2/3">
+                      <label htmlFor="fullName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Họ tên
+                      </label>
+                      <input
+                        type="fullName"
+                        name="fullName"
+                        value={register.fullName}
+                        onChange={handleChange}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#2563eb] focus:border-[#2563eb] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                        placeholder="Nguyễn Văn A"
+                      />
+                    </div>
                   </div>
 
                   <div>
@@ -116,31 +132,47 @@ export function RegisterPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                      Mật khẩu
+                    <label htmlFor="phoneNumber" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      Số điện thoại
                     </label>
                     <input
-                      type="password"
-                      name="password"
-                      value={register.password}
+                      type="phoneNumber"
+                      name="phoneNumber"
+                      value={register.phoneNumber}
                       onChange={handleChange}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#2563eb] focus:border-[#2563eb] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                      placeholder="••••••••"
+                      placeholder="01234"
                     />
                   </div>
 
-                  <div>
-                    <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                      Xác nhận mật khẩu
-                    </label>
-                    <input
-                      type="password"
-                      name="confirmPwd"
-                      value={register.confirmPwd}
-                      onChange={handleChange}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#2563eb] focus:border-[#2563eb] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                      placeholder="••••••••"
-                    />
+                  <div className="flex gap-4">
+                    <div className="basis-1/2">
+                      <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Mật khẩu
+                      </label>
+                      <input
+                        type="password"
+                        name="password"
+                        value={register.password}
+                        onChange={handleChange}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#2563eb] focus:border-[#2563eb] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                        placeholder="••••••••"
+                      />
+                    </div>
+
+                    <div className="basis-1/2">
+                      <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Xác nhận mật khẩu
+                      </label>
+                      <input
+                        type="password"
+                        name="confirmPwd"
+                        value={register.confirmPwd}
+                        onChange={handleChange}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#2563eb] focus:border-[#2563eb] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                        placeholder="••••••••"
+                      />
+                    </div>
                   </div>
 
                   <div className="flex items-start">
@@ -184,7 +216,7 @@ export function RegisterPage() {
 
           </div>
 
-          <div className="hidden md:block w-1/2">
+          <div className="hidden md:block h-full w-2/3">
             <img src="/src/assets/images/sign-up.png" alt="Sign Up" className="object-cover w-full h-full" />
           </div>
         </div>

@@ -48,13 +48,13 @@ export function LoginPage() {
       setErrorMgs('Lỗi đăng nhập thử lại lần sau');
     },
     onSuccess: (data) => {
-
+      let token = data.data;
       if (remember) {
-        localStorage.setItem('accessToken', JSON.stringify(data.accessToken));
-        localStorage.setItem('refreshToken', JSON.stringify(data.refreshToken));
+        localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
+        localStorage.setItem('refreshToken', JSON.stringify(token.refreshToken));
       }
       else {
-        localStorage.setItem('accessToken', JSON.stringify(data.accessToken));
+        localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
       }
       goto('/');
     }
@@ -65,7 +65,7 @@ export function LoginPage() {
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
 
         <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-4xl gap-8">
-          <div className="w-full md:w-1/2">
+          <div className="w-full md:w-2/3">
 
             <div className="w-full bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -167,7 +167,7 @@ export function LoginPage() {
             
           </div>
 
-          <div className="hidden md:block w-1/2">
+          <div className="hidden md:block h-full w-2/3">
             <img src="/src/assets/images/sign-in.png" alt="Login" className="object-cover w-full h-full" />
           </div>
         </div>

@@ -7,11 +7,11 @@ const endpoint = '/auth';
 
 const AuthService = {
   register: async (formdata: Register) => {
-    const res = await publicApi.post(`${endpoint}/register`, { ...formdata });
+    const res = await publicApi.post(`${endpoint}/signup`, { ...formdata });
     return res.data;
   },
   login: async (formdata: Login) => {
-    const res = await publicApi.post(`${endpoint}/login`, { ...formdata });
+    const res = await publicApi.post(`${endpoint}/signin`, { ...formdata });
     return res.data;
   },
   enable2fa: async (formdata: Enable2fa) => {
