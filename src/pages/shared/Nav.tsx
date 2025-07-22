@@ -14,7 +14,7 @@ export function Nav() {
 
         <div className="flex items-center md:order-2 gap-4 space-x-3 md:space-x-0 rtl:space-x-reverse">
 
-          <button type="button" className="relative inline-flex items-center p-2 text-sm font-medium text-center text-white rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-amber-500 dark:focus:ring-blue-800">
+          <Link to="/cart" className="relative inline-flex items-center p-2 text-sm font-medium text-center text-white rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-amber-500 dark:focus:ring-blue-800">
 
             <svg className="w-[30px] h-[30px] text-gray-800 dark:text-white cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/>
@@ -22,9 +22,9 @@ export function Nav() {
 
             <span className="sr-only">Notifications</span>
 
-            <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">20</div>
+            <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">1</div>
 
-          </button>
+          </Link>
 
           {!token &&
             <Link to="/login" className="text-white bg-amber-500 hover:bg-amber-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-amber-500 dark:focus:ring-blue-800 cursor-pointer">Đăng nhập</Link>

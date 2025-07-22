@@ -41,7 +41,8 @@ export function ProductFilterPage() {
     "Price: High to Low",
   ];
 
-  const [toggle, setToggle] = useState<boolean>(false);
+  const [toggleLg, setToggleLg] = useState<boolean>(false);
+  const [toggleMd, setToggleMd] = useState<boolean>(false);
 
   const { data } = useQuery({
     queryKey: ['category'],
@@ -55,25 +56,32 @@ export function ProductFilterPage() {
     <div className="bg-white">
       <div>
 
-        <div className="relative z-40 lg:hidden" role="dialog" aria-modal="true">
-
+        <div className={`relative z-40 lg:hidden ${!toggleMd && 'hidden'}`} role="dialog" aria-modal="true">
           <div className="fixed inset-0 bg-black/25" aria-hidden="true"></div>
 
           <div className="fixed inset-0 z-40 flex">
 
             <div className="relative ml-auto flex size-full max-w-xs flex-col overflow-y-auto bg-white pt-4 pb-6 shadow-xl">
               <div className="flex items-center justify-between px-4">
+
                 <h2 className="text-lg font-medium text-gray-900">Filters</h2>
-                <button type="button" className="relative -mr-2 flex size-10 items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden">
+
+                <button 
+                  type="button"
+                  onClick={() => setToggleMd(false)} 
+                  className="relative -mr-2 flex size-10 items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden"
+                >
                   <span className="absolute -inset-0.5"></span>
                   <span className="sr-only">Close menu</span>
                   <svg className="size-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                   </svg>
                 </button>
+
               </div>
 
               <form className="mt-4 border-t border-gray-200">
+
                 <h3 className="sr-only">Categories</h3>
                 <ul role="list" className="px-2 py-3 font-medium text-gray-900">
                   <li>
@@ -93,7 +101,7 @@ export function ProductFilterPage() {
                   </li>
                 </ul>
 
-                <div className="border-t border-gray-200 px-4 py-6">
+                {/* <div className="border-t border-gray-200 px-4 py-6">
                   <h3 className="-mx-2 -my-3 flow-root">
 
                     <button type="button" className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500" aria-controls="filter-section-mobile-color" aria-expanded="false">
@@ -187,8 +195,9 @@ export function ProductFilterPage() {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="border-t border-gray-200 px-4 py-6">
+                </div> */}
+
+                {/* <div className="border-t border-gray-200 px-4 py-6">
                   <h3 className="-mx-2 -my-3 flow-root">
 
                     <button type="button" className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500" aria-controls="filter-section-mobile-category" aria-expanded="false">
@@ -270,9 +279,9 @@ export function ProductFilterPage() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 
-                <div className="border-t border-gray-200 px-4 py-6">
+                {/* <div className="border-t border-gray-200 px-4 py-6">
                   <h3 className="-mx-2 -my-3 flow-root">
 
                     <button type="button" className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500" aria-controls="filter-section-mobile-size" aria-expanded="false">
@@ -366,9 +375,11 @@ export function ProductFilterPage() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
+
               </form>
             </div>
+
           </div>
         </div>
 
@@ -382,7 +393,7 @@ export function ProductFilterPage() {
                 <div>
                   <button 
                     type="button" 
-                    onClick={() => setToggle(!toggle)}
+                    onClick={() => setToggleLg(!toggleLg)}
                     className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900 cursor-pointer" id="menu-button" 
                     aria-expanded="false" 
                     aria-haspopup="true"
@@ -394,7 +405,7 @@ export function ProductFilterPage() {
                   </button>
                 </div>
 
-                <div className={`absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black/5 focus:outline-hidden ${!toggle && 'hidden'} `} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={1}>
+                <div className={`absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black/5 focus:outline-hidden ${!toggleLg && 'hidden'} `} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={1}>
                   <div className="py-1" role="none">
 
                     {options.map((option, i) => (
@@ -423,7 +434,11 @@ export function ProductFilterPage() {
                 </svg>
               </button>
 
-              <button type="button" className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden">
+              <button 
+                type="button"
+                onClick={() => setToggleMd(true)}
+                className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
+              >
                 <span className="sr-only">Filters</span>
                 <svg className="size-5" aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" data-slot="icon">
                   <path fillRule="evenodd" d="M2.628 1.601C5.028 1.206 7.49 1 10 1s4.973.206 7.372.601a.75.75 0 0 1 .628.74v2.288a2.25 2.25 0 0 1-.659 1.59l-4.682 4.683a2.25 2.25 0 0 0-.659 1.59v3.037c0 .684-.31 1.33-.844 1.757l-1.937 1.55A.75.75 0 0 1 8 18.25v-5.757a2.25 2.25 0 0 0-.659-1.591L2.659 6.22A2.25 2.25 0 0 1 2 4.629V2.34a.75.75 0 0 1 .628-.74Z" clipRule="evenodd" />
@@ -666,7 +681,7 @@ export function ProductFilterPage() {
 
 
               <div className="lg:col-span-3">
-                <ProductPage queryOption={queryOption} />
+                <ProductPage queryOption={queryOption} sortCmd="" />
               </div>
 
             </div>

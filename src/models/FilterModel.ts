@@ -5,5 +5,5 @@ export interface Filter {
 
 export interface FilterOption {
   lable: string,
-  value: any
+  value: any,
 }

@@ -1,6 +1,6 @@
 export interface Login {
   userNameOrEmail: string,
-  password: string
+  password: string,
 }
 
 export interface Register {
@@ -9,6 +9,6 @@ export interface Register {
   fullName: string,
   username: string, 
   password: string, 
-  confirmPwd: string
-  role: string
+  confirmPwd: string,
+  role: string,
 }

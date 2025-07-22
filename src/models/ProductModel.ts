@@ -9,7 +9,7 @@ export interface Product {
   deletedAt: string | null,
   deletedBy: string | null,
   isDeleted: boolean,
-  createdAt: string,
+  createdAt: string | null,
   createdBy: string | null,
   lastUpdatedAt: string | null,
   lastUpdatedBy: string | null,
@@ -17,7 +17,7 @@ export interface Product {
   categoryName: string,
   averageRatingPoint: number,
   ratingCount: number,
-  optionCount: number
+  optionCount: number,
 }
 
 export interface Category {
@@ -25,7 +25,7 @@ export interface Category {
   Name: string,
   ActiveStatus: number,
   ProductCount: number,
-  CreateAt: Date
+  CreateAt: string | null,
 }
 
 export interface SearchQuery {
@@ -34,10 +34,10 @@ export interface SearchQuery {
   sortDecending: boolean,
   filter: {
     isActive: boolean,
-    categoryId: string
+    categoryId: string,
   },
   pageIndex: number,
-  pageSize: number
+  pageSize: number,
 }
 
 export interface FilterProduct {
@@ -47,6 +47,6 @@ export interface FilterProduct {
   lowToHighCost: boolean,
   priceRange: {
     minPrice: number,
-    maxPrice: number
+    maxPrice: number,
   }
 }
